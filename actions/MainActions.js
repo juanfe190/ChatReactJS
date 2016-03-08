@@ -2,14 +2,32 @@ import AppDispatcher from '../dispatcher/AppDispatcher.js';
 import MainStore from '../stores/MainStore.js';
 
 var MainActions = {
-	sayHi: function(){
+	/**
+	* Envia mensaje al servidor
+	* @param String mensaje
+	*/
+	sendToServer: function(msg){
 		AppDispatcher.dispatch({
-			actionType: 'sayHi'
+			actionType: 'sendToServer',
+			message: msg
 		});
 	},
-	connectToServer: function(){
+
+	/**
+	* Conecta con el servidor
+	* @param String user
+	*/
+	connectToServer: function(user){
 		AppDispatcher.dispatch({
-			actionType: 'connect'
+			actionType: 'connect',
+			username: user
+		});
+	},
+
+	changeActiveUser: function(user){
+		AppDispatcher.dispatch({
+			actionType: 'changeActiveUser',
+			username: user
 		});
 	}
 }

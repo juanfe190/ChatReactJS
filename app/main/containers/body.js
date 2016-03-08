@@ -11,9 +11,11 @@ var ChatBody = React.createClass({
 	},
 
 	componentDidMount: function(){
-		MainActions.connectToServer();
+		//
 	},
-
+	btnSendOnClick: function(){
+		MainActions.sendToServer(this.state.txtSending);
+	},
 	onChangeHandler: function(event){
 		this.setState({ [event.target.name] : event.target.value});
 	},
@@ -21,7 +23,7 @@ var ChatBody = React.createClass({
 		return(
 			<form>
 				<div className="form-group">
-					<textarea className="form-control" 
+					<textarea className="form-control msgarea" 
 						value={this.state.txtArea} 
 						name="txtArea" />
 				</div>
@@ -31,7 +33,8 @@ var ChatBody = React.createClass({
 						 name="txtSending"
 						 value={this.state.txtSending}
 						 onChange={this.onChangeHandler} />
-					<button className="btn btn-default">Enviar</button>
+					<button className="btn btn-default" 
+						onClick={this.btnSendOnClick}>Enviar</button>
 				</div>
 			</form>
 		)

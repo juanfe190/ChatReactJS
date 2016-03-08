@@ -6,7 +6,7 @@ import LiUser from '../components/li-user.js';
 var UserList = React.createClass({
 	/**
 	* Itera el objeto 'this.props.allUsers'
-	* y crea los componentes LiUser+
+	* y crea los componentes LiUser
 	*
 	*/
 	printUsers: function(){
@@ -15,9 +15,10 @@ var UserList = React.createClass({
 			let username = user;
 			let newMessages = this.props.allUsers[user].newMessages;
 			components.push(<LiUser 
-					key={user}
-					newMessages={newMessages}
-					username={username}/>);
+								key={user}
+								newMessages={newMessages}
+								username={username}
+								active={this.props.activeUser === user} />); //REVISAR CLASE ACTIVE SI ES EL USUARIO
 		}
 		return components;
 	},

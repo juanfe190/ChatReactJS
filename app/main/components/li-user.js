@@ -3,6 +3,9 @@ import {MainActions} from '../../../suppliers/action-supplier.js';
 import {MainStore} from '../../../suppliers/store-supplier.js';
 
 var LiUser = React.createClass({
+	handleOnClick: function(){
+		MainActions.changeActiveUser(this.props.username);
+	},
 	/*
 	* Revisa si existe algun mensaje nuevo o imprime vacio
 	* en caso de no existir ninguno
@@ -13,8 +16,9 @@ var LiUser = React.createClass({
 	},
 	
 	render: function(){
+		let liClass = this.props.active ? "list-group-item active" : "list-group-item";
 		return(
-			<li className="list-group-item">
+			<li onClick={this.handleOnClick} className={liClass}>
 			    <span className="badge">{this.printMsgCount()}</span>
 			    {this.props.username}
 			  </li>

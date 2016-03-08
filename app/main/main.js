@@ -1,5 +1,5 @@
 import {React, ReactDOM} from '../../suppliers/vendor-supplier.js';
-import {Header, ChatBody, UserList} from './component-supplier.js';
+import {Header, ChatBody, UserList, InsertName} from './component-supplier.js';
 import {MainStore} from '../../suppliers/store-supplier.js';
 
 var Main = React.createClass({
@@ -9,16 +9,22 @@ var Main = React.createClass({
 	componentDidMount: function(){
 		MainStore.addChangeListener(this.update);
 	},
+	componentWillUnmount: function(){
+		MainStore.removeChangeListener(this.update);
+	},
 	update: function(){
 		this.setState(MainStore.getState());
 	},
 	render: function(){
 		return(
-			<div className="container">
-				<div className="col-sm-6 col-sm-offset-3">
-					<Header activeUser={this.state.activeUser}/>
-					<ChatBody />
-					<UserList allUsers={this.state.allUsers}/>
+			<div>
+				<InsertName />
+				<div className="container">
+					<div className="col-sm-6 col-sm-offset-3">
+						<Header activeUser={this.state.activeUser}/>
+						<ChatBody />
+						<UserList allUsers={this.state.allUsers} activeUser={this.state.activeUser}/>
+					</div>
 				</div>
 			</div>
 		)

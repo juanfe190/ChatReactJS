@@ -25,6 +25,19 @@ var MainStore = Object.assign({}, EventEmitter.prototype,{
 		return data;
 	},
 });
+/**
+* Esta funcion envia un mensaje para que el server
+* lo maneje
+* @param String mensaje
+*/
+function sendMessage(msg){
+	let sendTo = this.data.activeUser;
+	let message = msg;
+	socket.emit('msgToServer', {
+		user: sendTo,
+		message: message
+	});
+}
 
 /**
 * Agrega un mensaje nuevo o crea el usuario
@@ -41,10 +54,14 @@ function newUser(user){
 AppDispatcher.register(function(action){
 	switch(action.actionType){
 		case 'changeActiveUser':
-			//funcion
+			data.activeUser = action.username;
+			MainStore.emitChange();
 			break;
 		case 'connect':
-			socket.emit('newUser', 'react');
+			socket.emit('newUser', action.username);
+			break;
+		case 'sendToServer':
+			sendMessage(action.message);
 			break;
 	}
 });
