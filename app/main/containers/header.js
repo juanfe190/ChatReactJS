@@ -9,7 +9,8 @@ var Header = React.createClass({
 	render: function(){
 		return(
 			<div>
-				<h1>Chat con: {this.props.activeUser}</h1>
+				<h1>Bienvenido {this.props.myUsername}!</h1>
+				<h2>Chat con: {this.props.activeUser.username}</h2>
 			</div>
 		)
 	}

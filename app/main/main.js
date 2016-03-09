@@ -16,14 +16,16 @@ var Main = React.createClass({
 		this.setState(MainStore.getState());
 	},
 	render: function(){
+		let msg = typeof this.state.activeUser.messages === 'undefined'? '' 
+		: this.state.activeUser.messages;
 		return(
 			<div>
 				<InsertName />
 				<div className="container">
 					<div className="col-sm-6 col-sm-offset-3">
-						<Header activeUser={this.state.activeUser}/>
-						<ChatBody />
-						<UserList allUsers={this.state.allUsers} activeUser={this.state.activeUser}/>
+						<Header activeUser={this.state.activeUser} myUsername={this.state.myUsername}/>
+						<ChatBody messages={msg} username={this.state.activeUser.username}/>
+						<UserList allUsers={this.state.allUsers} activeUser={this.state.activeUser} myUsername={this.state.myUsername}/>
 					</div>
 				</div>
 			</div>

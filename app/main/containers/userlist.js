@@ -5,22 +5,22 @@ import LiUser from '../components/li-user.js';
 
 var UserList = React.createClass({
 	/**
-	* Itera el objeto 'this.props.allUsers'
+	* Itera el array 'this.props.allUsers'
 	* y crea los componentes LiUser
 	*
 	*/
 	printUsers: function(){
-		let components=[];
-		for(var user in this.props.allUsers) {
-			let username = user;
-			let newMessages = this.props.allUsers[user].newMessages;
-			components.push(<LiUser 
-								key={user}
-								newMessages={newMessages}
-								username={username}
-								active={this.props.activeUser === user} />); //REVISAR CLASE ACTIVE SI ES EL USUARIO
-		}
-		return components;
+		return this.props.allUsers.map((objUser, index)=>{
+			let username = objUser.username;
+			let newMessages = objUser.newMessages;
+			if(username !== this.props.myUsername){
+				return<LiUser 
+					key={index}
+					newMessages={newMessages}
+					username={username}
+					active={objUser.active} /> 
+			}
+		});
 	},
 	
 	render: function(){

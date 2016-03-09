@@ -5,6 +5,7 @@ import {MainStore} from '../../../suppliers/store-supplier.js';
 var LiUser = React.createClass({
 	handleOnClick: function(){
 		MainActions.changeActiveUser(this.props.username);
+		MainActions.resetNewMessagesCount(this.props.username);
 	},
 	/*
 	* Revisa si existe algun mensaje nuevo o imprime vacio

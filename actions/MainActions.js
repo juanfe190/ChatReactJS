@@ -24,10 +24,22 @@ var MainActions = {
 		});
 	},
 
-	changeActiveUser: function(user){
+	/**
+	* Cambia el usuario al que se le mandan acualmente mensajes
+	*
+	* @param String username
+	*/
+	changeActiveUser: function(username){
 		AppDispatcher.dispatch({
 			actionType: 'changeActiveUser',
-			username: user
+			username: username
+		});
+	},
+
+	resetNewMessagesCount: function(username){
+		AppDispatcher.dispatch({
+			actionType: 'resetNewMessagesCount',
+			username: username
 		});
 	}
 }
