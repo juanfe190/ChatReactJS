@@ -25,9 +25,12 @@ var UserList = React.createClass({
 	
 	render: function(){
 		return(
-			<ul className="list-group">
-			  {this.printUsers()}
-			</ul>
+			<div>
+				<p>Usuarios en linea:</p>
+				<ul className="list-group">
+				  {this.printUsers()}
+				</ul>
+			</div>
 		)
 	}
 });

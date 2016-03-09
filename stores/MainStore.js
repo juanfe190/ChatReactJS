@@ -28,6 +28,29 @@ var MainStore = Object.assign({}, EventEmitter.prototype,{
 	}
 });
 
+/**************************************
+************ DISPATCHER ***************
+***************************************/
+AppDispatcher.register(function(action){
+	switch(action.actionType){
+		case 'changeActiveUser':
+			changeActiveUser(action.username);
+			MainStore.emitChange();
+			break;
+		case 'connect':
+			socket.emit('newUser', action.username);
+			data.myUsername = action.username;
+			break;
+		case 'sendToServer':
+			sendMessage(action.message);
+			break;
+		case 'resetNewMessagesCount':
+			resetNewMessagesCount(action.username);
+			MainStore.emitChange();
+			break;
+	}
+});
+
 
 
 /**
@@ -94,28 +117,10 @@ function resetNewMessagesCount(username){
 	user.newMessages=0;
 }
 
-//Registra dispatcher y escucha instrucciones
-AppDispatcher.register(function(action){
-	switch(action.actionType){
-		case 'changeActiveUser':
-			changeActiveUser(action.username);
-			MainStore.emitChange();
-			break;
-		case 'connect':
-			socket.emit('newUser', action.username);
-			data.myUsername = action.username;
-			break;
-		case 'sendToServer':
-			sendMessage(action.message);
-			break;
-		case 'resetNewMessagesCount':
-			resetNewMessagesCount(action.username);
-			MainStore.emitChange();
-			break;
-	}
-});
 
-//Listeners socket
+/***********************************
+********SOCKET.IO LISTENERES********
+************************************/
 socket.on('allUsers', (userlist)=> {
 	if(userlist.length > 0) getUsersFromServer(userlist);
 	MainStore.emitChange();
@@ -131,4 +136,7 @@ socket.on('msgToClient', (msgInfo)=>{
 	user.newMessages++;
 	MainStore.emitChange();
 });
+
+
+
 module.exports = MainStore;
