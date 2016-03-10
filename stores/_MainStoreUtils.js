@@ -10,6 +10,8 @@ export default class MainStoreUtils {
 			return objUser.username === username;
 		})[0];
 	}
+
+
 	/**
 	* Filtra los elementos que cumplan el criterio
 	*
@@ -26,5 +28,16 @@ export default class MainStoreUtils {
 
 			return exists;
 		});
+	}
+
+	/**
+	* Devuelve el usuario con la propiedad active
+	*
+	* @param array de usuarios({username: name, newMessages: 0, active: true})
+	*/
+	static getActiveUser(arrayUsers){
+		return arrayUsers.filter((objUser)=>{
+			return objUser.active
+		})[0];
 	}
 }

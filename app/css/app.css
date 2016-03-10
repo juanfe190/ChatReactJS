@@ -23,6 +23,30 @@
 	background-color: #D9EDF7;
 }
 
-.msgarea{
+.chatArea{
 	height: 400px !important; 
+	padding: 10px;
+	border: 2px solid black;
+	border-radius: 10px;
+}
+
+.chatArea .msgArea{
+	padding: 10px;
+	overflow-y: scroll;
+	height: 300px;
+}
+
+.chatArea .msgArea .msg{
+	margin-bottom: 10px;
+	border-color: transparent;
+	background-color: #337AB7;
+	color: black;
+	height: 30px;
+	line-height: 30px;
+	border-radius: 10px;
+}
+
+.chatArea .msgArea .mine{
+	background-color: #5CB85C;
+}
 }

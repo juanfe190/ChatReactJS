@@ -24,7 +24,7 @@ var Main = React.createClass({
 				<div className="container">
 					<div className="col-sm-6 col-sm-offset-3">
 						<Header activeUser={this.state.activeUser} myUsername={this.state.myUsername}/>
-						<ChatBody messages={msg} username={this.state.activeUser.username}/>
+						<ChatBody messages={this.state.activeUser.messages} username={this.state.activeUser.username}/>
 						<UserList allUsers={this.state.allUsers} activeUser={this.state.activeUser} myUsername={this.state.myUsername}/>
 					</div>
 				</div>

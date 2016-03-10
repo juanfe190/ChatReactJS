@@ -25,15 +25,29 @@ var ChatBody = React.createClass({
 	inputOnClickHandler: function(event){
 		MainActions.resetNewMessagesCount(this.props.username);
 	},
+	printMessages: function(){
+		if(typeof this.props.messages !== 'undefined'){
+			return this.props.messages.map((objMessage, index)=>{
+				return(
+					<div key={index} 
+						className={objMessage.mine? 'col-xs-10 col-xs-offset-2 msg mine'
+												  : 'col-xs-10 msg'}>
+					{objMessage.message}
+					</div>
+					)
+			});
+		}
+
+		return <div />
+	},
 	render: function(){
 		return(
-			<form>
-				<div className="form-group">
-					<textarea className="form-control msgarea" 
-						value={this.props.messages} 
-						name="txtArea" />
+			<div className="chatArea row">
+				<div className="msgArea col-sm-12">
+					<div className="row">{this.printMessages()}</div>
 				</div>
-				<div className="form-group">
+
+				<div className="col-sm-12">
 					<input type="text" 
 						 className="form-control"
 						 name="txtSending"
@@ -43,7 +57,7 @@ var ChatBody = React.createClass({
 					<button className="btn btn-default" 
 						onClick={this.btnSendOnClick}>Enviar</button>
 				</div>
-			</form>
+			</div>
 		)
 	}
 });

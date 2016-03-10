@@ -7,7 +7,7 @@ var socket = io('localhost:3000');
 
 var data={
 	myUsername: '',
-	activeUser: {},
+	activeUser: {}, // {username: 'foo', newMessages: 0, active=false, messages=[{message='foo', mine}]}
 	allUsers: []
 };
 
@@ -43,6 +43,7 @@ AppDispatcher.register(function(action){
 			break;
 		case 'sendToServer':
 			sendMessage(action.message);
+			MainStore.emitChange();
 			break;
 		case 'resetNewMessagesCount':
 			resetNewMessagesCount(action.username);
@@ -59,7 +60,7 @@ AppDispatcher.register(function(action){
 * @param String mensaje
 */
 function sendMessage(msg){
-	let userTo = getActiveUser().username;
+	let userTo = data.activeUser.username;
 	let message = msg;
 	let userFrom = data.myUsername;
 	socket.emit('msgToServer', {
@@ -67,6 +68,9 @@ function sendMessage(msg){
 		message: message,
 		userFrom: userFrom 
 	});
+
+	if(typeof data.activeUser.messages !== 'undefined') data.activeUser.messages.push({message: msg, mine: true});
+	else data.activeUser.messages = [{message: msg, mine: true}];
 }
 
 /**
@@ -91,7 +95,7 @@ function getUsersFromServer(userlist){
 * @param String username
 */
 function changeActiveUser(username){
-	var activeUser = getActiveUser();
+	var activeUser = MainStoreUtils.getActiveUser(data.allUsers);
 	if(typeof activeUser !== 'undefined') activeUser.active = false;
 	data.allUsers.forEach((objUser, index)=>{
 		if(objUser.username === username) {
@@ -101,17 +105,12 @@ function changeActiveUser(username){
 	});
 
 }
-/**
-* Devuelve el usuario al que se le estan enviando mensajes
-*
-* @return Object user
-*/
-function getActiveUser(){
-	return data.allUsers.filter((objUser)=>{
-		return objUser.active
-	})[0];
-}
 
+/**
+* Reinicia el contador de mensajes nuevos
+*
+* @param String username
+*/
 function resetNewMessagesCount(username){
 	let user = MainStoreUtils.findUser(username, data.allUsers);
 	user.newMessages=0;
@@ -131,8 +130,8 @@ socket.on('allUsers', (userlist)=> {
 */
 socket.on('msgToClient', (msgInfo)=>{
 	let user = MainStoreUtils.findUser(msgInfo.userFrom, data.allUsers);
-	if(typeof user.messages !== 'undefined') user.messages = user.messages + '\n' + msgInfo.message;
-	else user.messages = msgInfo.message;
+	if(typeof user.messages !== 'undefined') user.messages.push({message: msgInfo.message, mine: false});
+	else user.messages = [{message: msgInfo.message, mine: false}];
 	user.newMessages++;
 	MainStore.emitChange();
 });
