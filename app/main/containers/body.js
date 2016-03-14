@@ -44,7 +44,9 @@ var ChatBody = React.createClass({
 		return(
 			<div className="chatArea row">
 				<div className="msgArea col-sm-12">
-					<div className="row">{this.printMessages()}</div>
+					<div className="col-sm-11 centered">
+						<div className="row">{this.printMessages()}</div>
+					</div>
 				</div>
 
 				<div className="col-sm-12">
