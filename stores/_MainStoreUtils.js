@@ -6,9 +6,9 @@ export default class MainStoreUtils {
 	* @param array de usuarios({username: name, newMessages: 0, active: true})
 	*/
 	static findUser(username, arrayUsers){
-		return arrayUsers.filter(function(objUser){
+		return arrayUsers.find(function(objUser){
 			return objUser.username === username;
-		})[0];
+		});
 	}
 
 
@@ -36,8 +36,8 @@ export default class MainStoreUtils {
 	* @param array de usuarios({username: name, newMessages: 0, active: true})
 	*/
 	static getActiveUser(arrayUsers){
-		return arrayUsers.filter((objUser)=>{
+		return arrayUsers.find((objUser)=>{
 			return objUser.active
-		})[0];
+		});
 	}
 }
